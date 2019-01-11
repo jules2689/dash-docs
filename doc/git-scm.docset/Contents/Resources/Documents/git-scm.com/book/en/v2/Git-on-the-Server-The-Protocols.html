@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49925874-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-49925874-3');
+  </script>
+
+  <meta charset='utf-8'>
+  <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+
+  <title>Git - The Protocols</title>
+
+  <link href='../../../favicon.ico' rel='shortcut icon' type='image/x-icon'>
+
+  <link rel="stylesheet" media="screen" href="../../../assets/application-f5f03bcc188ae8e970cde87b2de42e2bd3f2fd68d464f171318bad58b61c4cb7.css" />
+  <script src="../../../assets/modernize-91eb7473bfa18e104376c623be884766692c7cf93c8769aea544ad57e3ea2292.js"></script>
+  <!--[if (gte IE 6)&(lte IE 8)]>
+  <script src="/javascripts/selectivizr-min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body id="documentation">
+
+  <div class="inner">
+    <header>
+
+  <a href="https://git-scm.com/"><img src="../../../images/logo@2x.png" width="110" height="46" alt="Git" /></a>
+  <span id="tagline"></span>
+  <script type="text/javascript">
+    var taglines = ["fast-version-control","everything-is-local","distributed-even-if-your-workflow-isnt","local-branching-on-the-cheap","distributed-is-the-new-centralized"];
+    var tagline = taglines[Math.floor(Math.random() * taglines.length)];
+    document.getElementById('tagline').innerHTML = '--' + tagline;
+  </script>
+  <form id="search" action="https://git-scm.com/search/results">
+    <input id="search-text" name="search" placeholder="Search entire site..." autocomplete="off" type="text" />
+  </form>
+  <div id="search-results"></div>
+
+</header>
+
+  </div> <!-- .inner -->
+
+    <div class="inner">
+      <div id="content-wrapper">
+        <aside class="sidebar">
+  <nav>
+    <ul>
+      <li>
+        <a href="https://git-scm.com/about">About</a>
+        <ul class="">
+          <li>
+            <a href="https://git-scm.com/about">Branching and Merging</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/about/small-and-fast">Small and Fast</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/about/distributed">Distributed</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/about/info-assurance">Data Assurance</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/about/staging-area">Staging Area</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/about/free-and-open-source">Free and Open Source</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/about/trademark">Trademark</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="active" href="https://git-scm.com/doc">Documentation</a>
+        <ul class="expanded">
+          <li>
+            <a href="https://git-scm.com/docs">Reference</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/book">Book</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/videos">Videos</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/doc/ext">External Links</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://git-scm.com/downloads">Downloads</a>
+        <ul class="">
+          <li>
+            <a href="https://git-scm.com/downloads/guis">GUI Clients</a>
+          </li>
+          <li>
+            <a href="https://git-scm.com/downloads/logos">Logos</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="https://git-scm.com/community">Community</a>
+      </li>
+    </ul>
+      <hr class="sidebar">
+        <p>
+This book is available in
+  <a href="https://git-scm.com/book/en">English</a>.
+</p>
+<p>
+  Full translation available in
+  <table>
+    <tr><td><a href="https://git-scm.com/book/bg">български език</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/es">Español</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/fr">Français</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/gr">Ελληνικά</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/ja">日本語</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/ko">한국어</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/nl">Nederlands</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/ru">Русский</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/sl">Slovenščina</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/tl">Tagalog</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/uk">Українська</a></td></tr>
+    <tr><td><a href="https://git-scm.com/book/zh">简体中文</a>,</td></tr>
+  </table>
+</p>
+<p>
+  Partial translations available in
+  <table>
+    <tr><td><a href="https://git-scm.com/book/cs">Čeština</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/mk">Македонски</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/pl">Polski</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/sr">Српски</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/uz">Ўзбекча</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/zh-tw">繁體中文</a>,</td></tr>
+  </table>
+</p>
+<p>
+  Translations started for
+  <table>
+    <tr><td><a href="https://git-scm.com/book/be">Беларуская</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/de">Deutsch</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/fa" dir="rtl">فارسی</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/id">Indonesian</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/it">Italiano</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/ms">Bahasa Melayu</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/pt-br">Português (Brasil)</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/pt-pt">Português (Portugal)</a>,</td></tr>
+    <tr><td><a href="https://git-scm.com/book/tr">Türkçe</a>.</td></tr>
+  </table>
+</p>
+<hr class="sidebar"/>
+<p>
+The source of this book is <a href="https://github.com/progit/progit2">hosted on GitHub.</a></br>
+Patches, suggestions and comments are welcome.
+</p>
+
+
+  </nav>
+</aside>
+
+        <div id="content">
+          
+
+<div id='book-chapters'>
+  <a class="dropdown-trigger" id="book-chapters-trigger" data-panel-id="chapters-dropdown" href="Git-on-the-Server-The-Protocols.html#">Chapters ▾</a>
+<div class='dropdown-panel' id='chapters-dropdown'>
+  <div class="three-column">
+    <div class='column-left'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>1. <a href="ch00/ch01-getting-started.html">Getting Started</a></h2>
+    <ol>
+          <li>
+            1.1
+            <a href="ch00/ch01-getting-started.html">About Version Control</a>
+          </li>
+          <li>
+            1.2
+            <a href="Getting-Started-A-Short-History-of-Git.html">A Short History of Git</a>
+          </li>
+          <li>
+            1.3
+            <a href="Getting-Started-Git-Basics.html">Git Basics</a>
+          </li>
+          <li>
+            1.4
+            <a href="Getting-Started-The-Command-Line.html">The Command Line</a>
+          </li>
+          <li>
+            1.5
+            <a href="Getting-Started-Installing-Git.html">Installing Git</a>
+          </li>
+          <li>
+            1.6
+            <a href="ch00/_first_time.html">First-Time Git Setup</a>
+          </li>
+          <li>
+            1.7
+            <a href="ch00/_git_help.html">Getting Help</a>
+          </li>
+          <li>
+            1.8
+            <a href="Getting-Started-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>2. <a href="ch00/_git_cloning.html">Git Basics</a></h2>
+    <ol>
+          <li>
+            2.1
+            <a href="ch00/_git_cloning.html">Getting a Git Repository</a>
+          </li>
+          <li>
+            2.2
+            <a href="ch00/_git_mv.html">Recording Changes to the Repository</a>
+          </li>
+          <li>
+            2.3
+            <a href="ch00/_viewing_history.html">Viewing the Commit History</a>
+          </li>
+          <li>
+            2.4
+            <a href="ch00/_unstaging.html">Undoing Things</a>
+          </li>
+          <li>
+            2.5
+            <a href="ch00/_remote_repos.html">Working with Remotes</a>
+          </li>
+          <li>
+            2.6
+            <a href="ch00/_annotated_tags.html">Tagging</a>
+          </li>
+          <li>
+            2.7
+            <a href="ch00/_git_aliases.html">Git Aliases</a>
+          </li>
+          <li>
+            2.8
+            <a href="Git-Basics-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>3. <a href="ch00/_switching_branches.html">Git Branching</a></h2>
+    <ol>
+          <li>
+            3.1
+            <a href="ch00/_switching_branches.html">Branches in a Nutshell</a>
+          </li>
+          <li>
+            3.2
+            <a href="ch00/_basic_branching.html">Basic Branching and Merging</a>
+          </li>
+          <li>
+            3.3
+            <a href="ch00/_branch_management.html">Branch Management</a>
+          </li>
+          <li>
+            3.4
+            <a href="ch00/_topic_branch.html">Branching Workflows</a>
+          </li>
+          <li>
+            3.5
+            <a href="ch00/_delete_branches.html">Remote Branches</a>
+          </li>
+          <li>
+            3.6
+            <a href="ch00/_rebase_rebase.html">Rebasing</a>
+          </li>
+          <li>
+            3.7
+            <a href="Git-Branching-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>4. <a href="Git-on-the-Server-The-Protocols.html">Git on the Server</a></h2>
+    <ol>
+          <li>
+            4.1
+            <a href="Git-on-the-Server-The-Protocols.html">The Protocols</a>
+          </li>
+          <li>
+            4.2
+            <a href="ch00/_bare_repo.html">Getting Git on a Server</a>
+          </li>
+          <li>
+            4.3
+            <a href="ch00/_generate_ssh_key.html">Generating Your SSH Public Key</a>
+          </li>
+          <li>
+            4.4
+            <a href="ch00/_setting_up_server.html">Setting Up the Server</a>
+          </li>
+          <li>
+            4.5
+            <a href="Git-on-the-Server-Git-Daemon.html">Git Daemon</a>
+          </li>
+          <li>
+            4.6
+            <a href="Git-on-the-Server-Smart-HTTP.html">Smart HTTP</a>
+          </li>
+          <li>
+            4.7
+            <a href="Git-on-the-Server-GitWeb.html">GitWeb</a>
+          </li>
+          <li>
+            4.8
+            <a href="ch00/_gitlab_groups_section.html">GitLab</a>
+          </li>
+          <li>
+            4.9
+            <a href="Git-on-the-Server-Third-Party-Hosted-Options.html">Third Party Hosted Options</a>
+          </li>
+          <li>
+            4.10
+            <a href="Git-on-the-Server-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>5. <a href="ch00/_integration_manager.html">Distributed Git</a></h2>
+    <ol>
+          <li>
+            5.1
+            <a href="ch00/_integration_manager.html">Distributed Workflows</a>
+          </li>
+          <li>
+            5.2
+            <a href="ch00/_project_over_email.html">Contributing to a Project</a>
+          </li>
+          <li>
+            5.3
+            <a href="ch00/_git_am.html">Maintaining a Project</a>
+          </li>
+          <li>
+            5.4
+            <a href="Distributed-Git-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+    <div class='column-middle'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>6. <a href="ch00/_personal_avatar.html">GitHub</a></h2>
+    <ol>
+          <li>
+            6.1
+            <a href="ch00/_personal_avatar.html">Account Setup and Configuration</a>
+          </li>
+          <li>
+            6.2
+            <a href="ch00/_email_notification.html">Contributing to a Project</a>
+          </li>
+          <li>
+            6.3
+            <a href="ch00/_email_notifications.html">Maintaining a Project</a>
+          </li>
+          <li>
+            6.4
+            <a href="ch00/_team_page.html">Managing an organization</a>
+          </li>
+          <li>
+            6.5
+            <a href="ch00/_commit_status.html">Scripting GitHub</a>
+          </li>
+          <li>
+            6.6
+            <a href="GitHub-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>7. <a href="ch00/_git_reflog.html">Git Tools</a></h2>
+    <ol>
+          <li>
+            7.1
+            <a href="ch00/_git_reflog.html">Revision Selection</a>
+          </li>
+          <li>
+            7.2
+            <a href="ch00/_interactive_staging.html">Interactive Staging</a>
+          </li>
+          <li>
+            7.3
+            <a href="ch00/_git_clean.html">Stashing and Cleaning</a>
+          </li>
+          <li>
+            7.4
+            <a href="ch00/_signing_commits.html">Signing Your Work</a>
+          </li>
+          <li>
+            7.5
+            <a href="ch00/_git_grep.html">Searching</a>
+          </li>
+          <li>
+            7.6
+            <a href="ch00/_removing_file_every_commit.html">Rewriting History</a>
+          </li>
+          <li>
+            7.7
+            <a href="ch00/_the_index.html">Reset Demystified</a>
+          </li>
+          <li>
+            7.8
+            <a href="ch00/_reverse_commit.html">Advanced Merging</a>
+          </li>
+          <li>
+            7.9
+            <a href="ch00/ref_rerere.html">Rerere</a>
+          </li>
+          <li>
+            7.10
+            <a href="ch00/_file_annotation.html">Debugging with Git</a>
+          </li>
+          <li>
+            7.11
+            <a href="ch00/_publishing_submodules.html">Submodules</a>
+          </li>
+          <li>
+            7.12
+            <a href="ch00/_bundling.html">Bundling</a>
+          </li>
+          <li>
+            7.13
+            <a href="ch00/_replace.html">Replace</a>
+          </li>
+          <li>
+            7.14
+            <a href="ch00/_credential_caching.html">Credential Storage</a>
+          </li>
+          <li>
+            7.15
+            <a href="Git-Tools-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>8. <a href="ch00/_external_merge_tools.html">Customizing Git</a></h2>
+    <ol>
+          <li>
+            8.1
+            <a href="ch00/_external_merge_tools.html">Git Configuration</a>
+          </li>
+          <li>
+            8.2
+            <a href="ch00/_keyword_expansion.html">Git Attributes</a>
+          </li>
+          <li>
+            8.3
+            <a href="ch00/_email_hooks.html">Git Hooks</a>
+          </li>
+          <li>
+            8.4
+            <a href="ch00/_enforcing_commit_message_format.html">An Example Git-Enforced Policy</a>
+          </li>
+          <li>
+            8.5
+            <a href="Customizing-Git-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>9. <a href="ch00/_git_svn.html">Git and Other Systems</a></h2>
+    <ol>
+          <li>
+            9.1
+            <a href="ch00/_git_svn.html">Git as a Client</a>
+          </li>
+          <li>
+            9.2
+            <a href="ch00/_git_tfs.html">Migrating to Git</a>
+          </li>
+          <li>
+            9.3
+            <a href="Git-and-Other-Systems-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>10. <a href="ch00/_plumbing_porcelain.html">Git Internals</a></h2>
+    <ol>
+          <li>
+            10.1
+            <a href="ch00/_plumbing_porcelain.html">Plumbing and Porcelain</a>
+          </li>
+          <li>
+            10.2
+            <a href="ch00/_git_commit_objects.html">Git Objects</a>
+          </li>
+          <li>
+            10.3
+            <a href="ch00/ref_the_ref.html">Git References</a>
+          </li>
+          <li>
+            10.4
+            <a href="Git-Internals-Packfiles.html">Packfiles</a>
+          </li>
+          <li>
+            10.5
+            <a href="ch00/_pushing_refspecs.html">The Refspec</a>
+          </li>
+          <li>
+            10.6
+            <a href="Git-Internals-Transfer-Protocols.html">Transfer Protocols</a>
+          </li>
+          <li>
+            10.7
+            <a href="ch00/_git_gc.html">Maintenance and Data Recovery</a>
+          </li>
+          <li>
+            10.8
+            <a href="Git-Internals-Environment-Variables.html">Environment Variables</a>
+          </li>
+          <li>
+            10.9
+            <a href="Git-Internals-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+    <div class='column-right'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>A1. <a href="Appendix-A%253A-Git-in-Other-Environments-Graphical-Interfaces.html">Appendix A: Git in Other Environments</a></h2>
+    <ol>
+          <li>
+            A1.1
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Graphical-Interfaces.html">Graphical Interfaces</a>
+          </li>
+          <li>
+            A1.2
+            <a href="ch00/vs_home.html">Git in Visual Studio</a>
+          </li>
+          <li>
+            A1.3
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Git-in-Eclipse.html">Git in Eclipse</a>
+          </li>
+          <li>
+            A1.4
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Git-in-Bash.html">Git in Bash</a>
+          </li>
+          <li>
+            A1.5
+            <a href="ch00/oh_my_zsh_git.html">Git in Zsh</a>
+          </li>
+          <li>
+            A1.6
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Git-in-Powershell.html">Git in Powershell</a>
+          </li>
+          <li>
+            A1.7
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Summary.html">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>A2. <a href="Appendix-B%253A-Embedding-Git-in-your-Applications-Command-line-Git.html">Appendix B: Embedding Git in your Applications</a></h2>
+    <ol>
+          <li>
+            A2.1
+            <a href="Appendix-B%253A-Embedding-Git-in-your-Applications-Command-line-Git.html">Command-line Git</a>
+          </li>
+          <li>
+            A2.2
+            <a href="ch00/_libgit2_bindings.html">Libgit2</a>
+          </li>
+          <li>
+            A2.3
+            <a href="Appendix-B%253A-Embedding-Git-in-your-Applications-JGit.html">JGit</a>
+          </li>
+          <li>
+            A2.4
+            <a href="Appendix-B%253A-Embedding-Git-in-your-Applications-go-git.html">go-git</a>
+          </li>
+          <li>
+            A2.5
+            <a href="Appendix-B%253A-Embedding-Git-in-your-Applications-Dulwich.html">Dulwich</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>A3. <a href="Appendix-C%253A-Git-Commands-Setup-and-Config.html">Appendix C: Git Commands</a></h2>
+    <ol>
+          <li>
+            A3.1
+            <a href="Appendix-C%253A-Git-Commands-Setup-and-Config.html">Setup and Config</a>
+          </li>
+          <li>
+            A3.2
+            <a href="Appendix-C%253A-Git-Commands-Getting-and-Creating-Projects.html">Getting and Creating Projects</a>
+          </li>
+          <li>
+            A3.3
+            <a href="Appendix-C%253A-Git-Commands-Basic-Snapshotting.html">Basic Snapshotting</a>
+          </li>
+          <li>
+            A3.4
+            <a href="Appendix-C%253A-Git-Commands-Branching-and-Merging.html">Branching and Merging</a>
+          </li>
+          <li>
+            A3.5
+            <a href="Appendix-C%253A-Git-Commands-Sharing-and-Updating-Projects.html">Sharing and Updating Projects</a>
+          </li>
+          <li>
+            A3.6
+            <a href="Appendix-C%253A-Git-Commands-Inspection-and-Comparison.html">Inspection and Comparison</a>
+          </li>
+          <li>
+            A3.7
+            <a href="Appendix-C%253A-Git-Commands-Debugging.html">Debugging</a>
+          </li>
+          <li>
+            A3.8
+            <a href="Appendix-C%253A-Git-Commands-Patching.html">Patching</a>
+          </li>
+          <li>
+            A3.9
+            <a href="Appendix-C%253A-Git-Commands-Email.html">Email</a>
+          </li>
+          <li>
+            A3.10
+            <a href="Appendix-C%253A-Git-Commands-External-Systems.html">External Systems</a>
+          </li>
+          <li>
+            A3.11
+            <a href="Appendix-C%253A-Git-Commands-Administration.html">Administration</a>
+          </li>
+          <li>
+            A3.12
+            <a href="Appendix-C%253A-Git-Commands-Plumbing-Commands.html">Plumbing Commands</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+  </div>
+ </div>
+
+    <span class="light" id="edition">
+      2nd Edition
+    </span>
+</div>
+
+<div id='main' class="book edition2">
+    <a name="//apple_ref/Guide/4.1%20Git%20on%20the%20Server%20-%20The%20Protocols" class="dashAnchor"></a>
+<h1>4.1 Git on the Server - The Protocols</h1>
+  <div><p>
+At this point, you should be able to do most of the day-to-day tasks for which you’ll be using Git.
+However, in order to do any collaboration in Git, you’ll need to have a remote Git repository.
+Although you can technically push changes to and pull changes from individuals' repositories, doing so is discouraged because you can fairly easily confuse what they’re working on if you’re not careful.
+Furthermore, you want your collaborators to be able to access the repository even if your computer is offline — having a more reliable common repository is often useful.
+Therefore, the preferred method for collaborating with someone is to set up an intermediate repository that you both have access to, and push to and pull from that.</p><p>Running a Git server is fairly straightforward.
+First, you choose which protocols you want your server to support.
+The first section of this chapter will cover the available protocols and the pros and cons of each.
+The next sections will explain some typical setups using those protocols and how to get your server running with them.
+Last, we’ll go over a few hosted options, if you don’t mind hosting your code on someone else’s server and don’t want to go through the hassle of setting up and maintaining your own server.</p><p>If you have no interest in running your own server, you can skip to the last section of the chapter to see some options for setting up a hosted account and then move on to the next chapter, where we discuss the various ins and outs of working in a distributed source control environment.</p><p>A remote repository is generally a <em>bare repository</em> — a Git repository that has no working directory.
+Because the repository is only used as a collaboration point, there is no reason to have a snapshot checked out on disk; it’s just the Git data.
+In the simplest terms, a bare repository is the contents of your project’s <code>.git</code> directory and nothing else.</p>
+<a name="//apple_ref/Section/The%20Protocols" class="dashAnchor"></a>
+<h2 id="_the_protocols">The Protocols</h2>
+<div class="paragraph">
+<p>Git can use four distinct protocols to transfer data: Local, HTTP, Secure Shell (SSH) and Git.
+Here we’ll discuss what they are and in what basic circumstances you would want (or not want) to use them.</p>
+</div>
+<div class="sect3">
+<h3 id="_local_protocol">Local Protocol</h3>
+<div class="paragraph">
+<p>
+The most basic is the <em>Local protocol</em>, in which the remote repository is in another directory on the same host.
+This is often used if everyone on your team has access to a shared filesystem such as an NFS mount, or in the less likely case that everyone logs in to the same computer.
+The latter wouldn’t be ideal, because all your code repository instances would reside on the same computer, making a catastrophic loss much more likely.</p>
+</div>
+<div class="paragraph">
+<p>If you have a shared mounted filesystem, then you can clone, push to, and pull from a local file-based repository.
+To clone a repository like this, or to add one as a remote to an existing project, use the path to the repository as the URL.
+For example, to clone a local repository, you can run something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git clone /srv/git/project.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or you can do this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git clone file:///srv/git/project.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Git operates slightly differently if you explicitly specify <code>file://</code> at the beginning of the URL.
+If you just specify the path, Git tries to use hardlinks or directly copy the files it needs.
+If you specify <code>file://</code>, Git fires up the processes that it normally uses to transfer data over a network, which is generally much less efficient.
+The main reason to specify the <code>file://</code> prefix is if you want a clean copy of the repository with extraneous references or objects left out — generally after an import from another VCS or something similar (see <a href="ch00/_plumbing_porcelain.html">Git Internals</a> for maintenance tasks).
+We’ll use the normal path here because doing so is almost always faster.</p>
+</div>
+<div class="paragraph">
+<p>To add a local repository to an existing Git project, you can run something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git remote add local_proj /srv/git/project.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, you can push to and pull from that remote via your new remote name <code>local_proj</code> as though you were doing so over a network.</p>
+</div>
+<div class="sect4">
+<h4 id="_the_pros">The Pros</h4>
+<div class="paragraph">
+<p>The pros of file-based repositories are that they’re simple and they use existing file permissions and network access.
+If you already have a shared filesystem to which your whole team has access, setting up a repository is very easy.
+You stick the bare repository copy somewhere everyone has shared access to and set the read/write permissions as you would for any other shared directory.
+We’ll discuss how to export a bare repository copy for this purpose in <a href="ch00/_bare_repo.html">Getting Git on a Server</a>.</p>
+</div>
+<div class="paragraph">
+<p>This is also a nice option for quickly grabbing work from someone else’s working repository.
+If you and a co-worker are working on the same project and they want you to check something out, running a command like <code>git pull /home/john/project</code> is often easier than them pushing to a remote server and you subsequently fetching from it.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_the_cons">The Cons</h4>
+<div class="paragraph">
+<p>The cons of this method are that shared access is generally more difficult to set up and reach from multiple locations than basic network access.
+If you want to push from your laptop when you’re at home, you have to mount the remote disk, which can be difficult and slow compared to network-based access.</p>
+</div>
+<div class="paragraph">
+<p>It’s important to mention that this isn’t necessarily the fastest option if you’re using a shared mount of some kind.
+A local repository is fast only if you have fast access to the data.
+A repository on NFS is often slower than the repository over SSH on the same server, allowing Git to run off local disks on each system.</p>
+</div>
+<div class="paragraph">
+<p>Finally, this protocol does not protect the repository against accidental damage.
+Every user has full shell access to the “remote” directory, and there is nothing preventing them from changing or removing internal Git files and corrupting the repository.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_the_http_protocols">The HTTP Protocols</h3>
+<div class="paragraph">
+<p>Git can communicate over HTTP using two different modes.
+Prior to Git 1.6.6, there was only one way it could do this which was very simple and generally read-only.
+In version 1.6.6, a new, smarter protocol was introduced that involved Git being able to intelligently negotiate data transfer in a manner similar to how it does over SSH.
+In the last few years, this new HTTP protocol has become very popular since it’s simpler for the user and smarter about how it communicates.
+The newer version is often referred to as the <em>Smart</em> HTTP protocol and the older way as <em>Dumb</em> HTTP.
+We’ll cover the newer Smart HTTP protocol first.</p>
+</div>
+<div class="sect4">
+<h4 id="_smart_http">Smart HTTP</h4>
+<div class="paragraph">
+<p>
+Smart HTTP operates very similarly to the SSH or Git protocols but runs over standard HTTPS ports and can use various HTTP authentication mechanisms, meaning it’s often easier on the user than something like SSH, since you can use things like username/password authentication rather than having to set up SSH keys.</p>
+</div>
+<div class="paragraph">
+<p>It has probably become the most popular way to use Git now, since it can be set up to both serve anonymously like the <code>git://</code> protocol, and can also be pushed over with authentication and encryption like the SSH protocol.
+Instead of having to set up different URLs for these things, you can now use a single URL for both.
+If you try to push and the repository requires authentication (which it normally should), the server can prompt for a username and password.
+The same goes for read access.</p>
+</div>
+<div class="paragraph">
+<p>In fact, for services like GitHub, the URL you use to view the repository online (for example, <a href="https://github.com/schacon/simplegit" class="bare">https://github.com/schacon/simplegit</a>) is the same URL you can use to clone and, if you have access, push over.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_dumb_http">Dumb HTTP</h4>
+<div class="paragraph">
+<p>
+If the server does not respond with a Git HTTP smart service, the Git client will try to fall back to the simpler <em>Dumb</em> HTTP protocol.
+The Dumb protocol expects the bare Git repository to be served like normal files from the web server.
+The beauty of Dumb HTTP is the simplicity of setting it up.
+Basically, all you have to do is put a bare Git repository under your HTTP document root and set up a specific <code>post-update</code> hook, and you’re done (See <a href="ch00/_email_hooks.html">Git Hooks</a>).
+At that point, anyone who can access the web server under which you put the repository can also clone your repository.
+To allow read access to your repository over HTTP, do something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ cd /var/www/htdocs/
+$ git clone --bare /path/to/git_project gitproject.git
+$ cd gitproject.git
+$ mv hooks/post-update.sample hooks/post-update
+$ chmod a+x hooks/post-update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s all.
+The <code>post-update</code> hook that comes with Git by default runs the appropriate command (<code>git update-server-info</code>) to make HTTP fetching and cloning work properly.
+This command is run when you push to this repository (over SSH perhaps); then, other people can clone via something like</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git clone https://example.com/gitproject.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this particular case, we’re using the <code>/var/www/htdocs</code> path that is common for Apache setups, but you can use any static web server — just put the bare repository in its path.
+The Git data is served as basic static files (see the <a href="ch00/_plumbing_porcelain.html">Git Internals</a> chapter for details about exactly how it’s served).</p>
+</div>
+<div class="paragraph">
+<p>Generally you would either choose to run a read/write Smart HTTP server or simply have the files accessible as read-only in the Dumb manner.
+It’s rare to run a mix of the two services.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_the_pros_2">The Pros</h4>
+<div class="paragraph">
+<p>We’ll concentrate on the pros of the Smart version of the HTTP protocol.</p>
+</div>
+<div class="paragraph">
+<p>The simplicity of having a single URL for all types of access and having the server prompt only when authentication is needed makes things very easy for the end user.
+Being able to authenticate with a username and password is also a big advantage over SSH, since users don’t have to generate SSH keys locally and upload their public key to the server before being able to interact with it.
+For less sophisticated users, or users on systems where SSH is less common, this is a major advantage in usability.
+It is also a very fast and efficient protocol, similar to the SSH one.</p>
+</div>
+<div class="paragraph">
+<p>You can also serve your repositories read-only over HTTPS, which means you can encrypt the content transfer; or you can go so far as to make the clients use specific signed SSL certificates.</p>
+</div>
+<div class="paragraph">
+<p>Another nice thing is that HTTPS are such commonly used protocols that corporate firewalls are often set up to allow traffic through these ports.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_the_cons_2">The Cons</h4>
+<div class="paragraph">
+<p>Git over HTTPS can be a little more tricky to set up compared to SSH on some servers.
+Other than that, there is very little advantage that other protocols have over Smart HTTP for serving Git content.</p>
+</div>
+<div class="paragraph">
+<p>If you’re using HTTP for authenticated pushing, providing your credentials is sometimes more complicated than using keys over SSH.
+There are, however, several credential caching tools you can use, including Keychain access on macOS and Credential Manager on Windows, to make this pretty painless.
+Read <a href="ch00/_credential_caching.html">Credential Storage</a> to see how to set up secure HTTP password caching on your system.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_the_ssh_protocol">The SSH Protocol</h3>
+<div class="paragraph">
+<p>
+A common transport protocol for Git when self-hosting is over SSH.
+This is because SSH access to servers is already set up in most places — and if it isn’t, it’s easy to do.
+SSH is also an authenticated network protocol and, because it’s ubiquitous, it’s generally easy to set up and use.</p>
+</div>
+<div class="paragraph">
+<p>To clone a Git repository over SSH, you can specify an <code>ssh://</code> URL like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git clone ssh://[user@]server/project.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or you can use the shorter scp-like syntax for the SSH protocol:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git clone [user@]server:project.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In both cases above, if you don’t specify the optional username, Git assumes the user you’re currently logged in as.</p>
+</div>
+<div class="sect4">
+<h4 id="_the_pros_3">The Pros</h4>
+<div class="paragraph">
+<p>The pros of using SSH are many.
+First, SSH is relatively easy to set up — SSH daemons are commonplace, many network admins have experience with them, and many OS distributions are set up with them or have tools to manage them.
+Next, access over SSH is secure — all data transfer is encrypted and authenticated.
+Last, like the HTTPS, Git and Local protocols, SSH is efficient, making the data as compact as possible before transferring it.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_the_cons_3">The Cons</h4>
+<div class="paragraph">
+<p>The negative aspect of SSH is that it doesn’t support anonymous access to your Git repository.
+If you’re using SSH, people <em>must</em> have SSH access to your machine, even in a read-only capacity, which doesn’t make SSH conducive to open source projects for which people might simply want to clone your repository to examine it.
+If you’re using it only within your corporate network, SSH may be the only protocol you need to deal with.
+If you want to allow anonymous read-only access to your projects and also want to use SSH, you’ll have to set up SSH for you to push over but something else for others to fetch from.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_the_git_protocol">The Git Protocol</h3>
+<div class="paragraph">
+<p>
+Finally, we have the Git protocol.
+This is a special daemon that comes packaged with Git; it listens on a dedicated port (9418) that provides a service similar to the SSH protocol, but with absolutely no authentication.
+In order for a repository to be served over the Git protocol, you must create a <code>git-daemon-export-ok</code> file — the daemon won’t serve a repository without that file in it — but, other than that, there is no security.
+Either the Git repository is available for everyone to clone, or it isn’t.
+This means that there is generally no pushing over this protocol.
+You can enable push access but, given the lack of authentication, anyone on the internet who finds your project’s URL could push to that project.
+Suffice it to say that this is rare.</p>
+</div>
+<div class="sect4">
+<h4 id="_the_pros_4">The Pros</h4>
+<div class="paragraph">
+<p>The Git protocol is often the fastest network transfer protocol available.
+If you’re serving a lot of traffic for a public project or serving a very large project that doesn’t require user authentication for read access, it’s likely that you’ll want to set up a Git daemon to serve your project.
+It uses the same data-transfer mechanism as the SSH protocol but without the encryption and authentication overhead.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_the_cons_4">The Cons</h4>
+<div class="paragraph">
+<p>The downside of the Git protocol is the lack of authentication.
+It’s generally undesirable for the Git protocol to be the only access to your project.
+Generally, you’ll pair it with SSH or HTTPS access for the few developers who have push (write) access and have everyone else use <code>git://</code> for read-only access.
+It’s also probably the most difficult protocol to set up.
+It must run its own daemon, which requires <code>xinetd</code> or <code>systemd</code> configuration or the like, which isn’t always a walk in the park.
+It also requires firewall access to port 9418, which isn’t a standard port that corporate firewalls always allow.
+Behind big corporate firewalls, this obscure port is commonly blocked.</p>
+</div>
+</div>
+</div>
+<div id="nav"><a href="Git-Branching-Summary.html">prev</a> | <a href="ch00/_bare_repo.html">next</a></div></div>
+</div>
+
+        </div>
+      </div>
+      <footer>
+  <div class="site-source">
+    <a href="https://git-scm.com/site">About this site</a><br>
+    Patches, suggestions, and comments are welcome.
+  </div>
+  <div class="sfc-member">
+    Git is a member of <a href="https://git-scm.com/sfc">Software Freedom Conservancy</a>
+  </div>
+</footer>
+
+<script src="../../../assets/application-df8e4c34a53c9af865972757bd97591066f28f7c8ce2ec256c1b2f10c8c7b16a.js"></script>
+
+    </div>
+
+</body>
+</html>

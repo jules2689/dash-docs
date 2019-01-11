@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49925874-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-49925874-3');
+  </script>
+
+  <meta charset='utf-8'>
+  <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+
+  <title>Git - Revision Selection</title>
+
+  <link href='http://git-scm.com/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+
+  <link rel="stylesheet" media="screen" href="http://git-scm.com/assets/application-f5f03bcc188ae8e970cde87b2de42e2bd3f2fd68d464f171318bad58b61c4cb7.css" />
+  <script src="http://git-scm.com/assets/modernize-91eb7473bfa18e104376c623be884766692c7cf93c8769aea544ad57e3ea2292.js"></script>
+  <!--[if (gte IE 6)&(lte IE 8)]>
+  <script src="/javascripts/selectivizr-min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body id="documentation">
+
+  <div class="inner">
+    <header>
+
+  <a href="http://git-scm.com/"><img src="http://git-scm.com/images/logo@2x.png" width="110" height="46" alt="Git" /></a>
+  <span id="tagline"></span>
+  <script type="text/javascript">
+    var taglines = ["fast-version-control","everything-is-local","distributed-even-if-your-workflow-isnt","local-branching-on-the-cheap","distributed-is-the-new-centralized"];
+    var tagline = taglines[Math.floor(Math.random() * taglines.length)];
+    document.getElementById('tagline').innerHTML = '--' + tagline;
+  </script>
+  <form id="search" action="http://git-scm.com/search/results">
+    <input id="search-text" name="search" placeholder="Search entire site..." autocomplete="off" type="text" />
+  </form>
+  <div id="search-results"></div>
+
+</header>
+
+  </div> <!-- .inner -->
+
+    <div class="inner">
+      <div id="content-wrapper">
+        <aside class="sidebar">
+  <nav>
+    <ul>
+      <li>
+        <a href="http://git-scm.com/about">About</a>
+        <ul class="">
+          <li>
+            <a href="http://git-scm.com/about">Branching and Merging</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/about/small-and-fast">Small and Fast</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/about/distributed">Distributed</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/about/info-assurance">Data Assurance</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/about/staging-area">Staging Area</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/about/free-and-open-source">Free and Open Source</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/about/trademark">Trademark</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="active" href="http://git-scm.com/doc">Documentation</a>
+        <ul class="expanded">
+          <li>
+            <a href="http://git-scm.com/docs">Reference</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/book">Book</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/videos">Videos</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/doc/ext">External Links</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="http://git-scm.com/downloads">Downloads</a>
+        <ul class="">
+          <li>
+            <a href="http://git-scm.com/downloads/guis">GUI Clients</a>
+          </li>
+          <li>
+            <a href="http://git-scm.com/downloads/logos">Logos</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="http://git-scm.com/community">Community</a>
+      </li>
+    </ul>
+      <hr class="sidebar">
+        <p>
+This book is available in
+  <a href="http://git-scm.com/book/en">English</a>.
+</p>
+<p>
+  Full translation available in
+  <table>
+    <tr><td><a href="http://git-scm.com/book/bg">български език</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/es">Español</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/fr">Français</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/gr">Ελληνικά</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/ja">日本語</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/ko">한국어</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/nl">Nederlands</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/ru">Русский</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/sl">Slovenščina</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/tl">Tagalog</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/uk">Українська</a></td></tr>
+    <tr><td><a href="http://git-scm.com/book/zh">简体中文</a>,</td></tr>
+  </table>
+</p>
+<p>
+  Partial translations available in
+  <table>
+    <tr><td><a href="http://git-scm.com/book/cs">Čeština</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/mk">Македонски</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/pl">Polski</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/sr">Српски</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/uz">Ўзбекча</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/zh-tw">繁體中文</a>,</td></tr>
+  </table>
+</p>
+<p>
+  Translations started for
+  <table>
+    <tr><td><a href="http://git-scm.com/book/be">Беларуская</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/de">Deutsch</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/fa" dir="rtl">فارسی</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/id">Indonesian</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/it">Italiano</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/ms">Bahasa Melayu</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/pt-br">Português (Brasil)</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/pt-pt">Português (Portugal)</a>,</td></tr>
+    <tr><td><a href="http://git-scm.com/book/tr">Türkçe</a>.</td></tr>
+  </table>
+</p>
+<hr class="sidebar"/>
+<p>
+The source of this book is <a href="https://github.com/progit/progit2">hosted on GitHub.</a></br>
+Patches, suggestions and comments are welcome.
+</p>
+
+
+  </nav>
+</aside>
+
+        <div id="content">
+          
+
+<div id='book-chapters'>
+  <a class="dropdown-trigger" id="book-chapters-trigger" data-panel-id="chapters-dropdown" href="Git-Tools-Revision-Selection.html#">Chapters ▾</a>
+<div class='dropdown-panel' id='chapters-dropdown'>
+  <div class="three-column">
+    <div class='column-left'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>1. <a href="Getting-Started-About-Version-Control.html">Getting Started</a></h2>
+    <ol>
+          <li>
+            1.1
+            <a href="Getting-Started-About-Version-Control.html">About Version Control</a>
+          </li>
+          <li>
+            1.2
+            <a href="http://git-scm.com/book/en/v2/Getting-Started-A-Short-History-of-Git">A Short History of Git</a>
+          </li>
+          <li>
+            1.3
+            <a href="http://git-scm.com/book/en/v2/Getting-Started-Git-Basics">Git Basics</a>
+          </li>
+          <li>
+            1.4
+            <a href="http://git-scm.com/book/en/v2/Getting-Started-The-Command-Line">The Command Line</a>
+          </li>
+          <li>
+            1.5
+            <a href="http://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Installing Git</a>
+          </li>
+          <li>
+            1.6
+            <a href="Getting-Started-First-Time-Git-Setup.html">First-Time Git Setup</a>
+          </li>
+          <li>
+            1.7
+            <a href="Getting-Started-Getting-Help.html">Getting Help</a>
+          </li>
+          <li>
+            1.8
+            <a href="http://git-scm.com/book/en/v2/Getting-Started-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>2. <a href="Git-Basics-Getting-a-Git-Repository.html">Git Basics</a></h2>
+    <ol>
+          <li>
+            2.1
+            <a href="Git-Basics-Getting-a-Git-Repository.html">Getting a Git Repository</a>
+          </li>
+          <li>
+            2.2
+            <a href="Git-Basics-Recording-Changes-to-the-Repository.html">Recording Changes to the Repository</a>
+          </li>
+          <li>
+            2.3
+            <a href="Git-Basics-Viewing-the-Commit-History.html">Viewing the Commit History</a>
+          </li>
+          <li>
+            2.4
+            <a href="Git-Basics-Undoing-Things.html">Undoing Things</a>
+          </li>
+          <li>
+            2.5
+            <a href="Git-Basics-Working-with-Remotes.html">Working with Remotes</a>
+          </li>
+          <li>
+            2.6
+            <a href="Git-Basics-Tagging.html">Tagging</a>
+          </li>
+          <li>
+            2.7
+            <a href="Git-Basics-Git-Aliases.html">Git Aliases</a>
+          </li>
+          <li>
+            2.8
+            <a href="http://git-scm.com/book/en/v2/Git-Basics-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>3. <a href="Git-Branching-Branches-in-a-Nutshell.html">Git Branching</a></h2>
+    <ol>
+          <li>
+            3.1
+            <a href="Git-Branching-Branches-in-a-Nutshell.html">Branches in a Nutshell</a>
+          </li>
+          <li>
+            3.2
+            <a href="Git-Branching-Basic-Branching-and-Merging.html">Basic Branching and Merging</a>
+          </li>
+          <li>
+            3.3
+            <a href="Git-Branching-Branch-Management.html">Branch Management</a>
+          </li>
+          <li>
+            3.4
+            <a href="Git-Branching-Branching-Workflows.html">Branching Workflows</a>
+          </li>
+          <li>
+            3.5
+            <a href="Git-Branching-Remote-Branches.html">Remote Branches</a>
+          </li>
+          <li>
+            3.6
+            <a href="Git-Branching-Rebasing.html">Rebasing</a>
+          </li>
+          <li>
+            3.7
+            <a href="http://git-scm.com/book/en/v2/Git-Branching-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>4. <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">Git on the Server</a></h2>
+    <ol>
+          <li>
+            4.1
+            <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">The Protocols</a>
+          </li>
+          <li>
+            4.2
+            <a href="Git-on-the-Server-Getting-Git-on-a-Server.html">Getting Git on a Server</a>
+          </li>
+          <li>
+            4.3
+            <a href="Git-on-the-Server-Generating-Your-SSH-Public-Key.html">Generating Your SSH Public Key</a>
+          </li>
+          <li>
+            4.4
+            <a href="Git-on-the-Server-Setting-Up-the-Server.html">Setting Up the Server</a>
+          </li>
+          <li>
+            4.5
+            <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-Git-Daemon">Git Daemon</a>
+          </li>
+          <li>
+            4.6
+            <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-Smart-HTTP">Smart HTTP</a>
+          </li>
+          <li>
+            4.7
+            <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb">GitWeb</a>
+          </li>
+          <li>
+            4.8
+            <a href="Git-on-the-Server-GitLab.html">GitLab</a>
+          </li>
+          <li>
+            4.9
+            <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-Third-Party-Hosted-Options">Third Party Hosted Options</a>
+          </li>
+          <li>
+            4.10
+            <a href="http://git-scm.com/book/en/v2/Git-on-the-Server-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>5. <a href="Distributed-Git-Distributed-Workflows.html">Distributed Git</a></h2>
+    <ol>
+          <li>
+            5.1
+            <a href="Distributed-Git-Distributed-Workflows.html">Distributed Workflows</a>
+          </li>
+          <li>
+            5.2
+            <a href="Distributed-Git-Contributing-to-a-Project.html">Contributing to a Project</a>
+          </li>
+          <li>
+            5.3
+            <a href="Distributed-Git-Maintaining-a-Project.html">Maintaining a Project</a>
+          </li>
+          <li>
+            5.4
+            <a href="http://git-scm.com/book/en/v2/Distributed-Git-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+    <div class='column-middle'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>6. <a href="GitHub-Account-Setup-and-Configuration.html">GitHub</a></h2>
+    <ol>
+          <li>
+            6.1
+            <a href="GitHub-Account-Setup-and-Configuration.html">Account Setup and Configuration</a>
+          </li>
+          <li>
+            6.2
+            <a href="GitHub-Contributing-to-a-Project.html">Contributing to a Project</a>
+          </li>
+          <li>
+            6.3
+            <a href="GitHub-Maintaining-a-Project.html">Maintaining a Project</a>
+          </li>
+          <li>
+            6.4
+            <a href="GitHub-Managing-an-organization.html">Managing an organization</a>
+          </li>
+          <li>
+            6.5
+            <a href="GitHub-Scripting-GitHub.html">Scripting GitHub</a>
+          </li>
+          <li>
+            6.6
+            <a href="http://git-scm.com/book/en/v2/GitHub-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>7. <a href="Git-Tools-Revision-Selection.html">Git Tools</a></h2>
+    <ol>
+          <li>
+            7.1
+            <a href="Git-Tools-Revision-Selection.html">Revision Selection</a>
+          </li>
+          <li>
+            7.2
+            <a href="Git-Tools-Interactive-Staging.html">Interactive Staging</a>
+          </li>
+          <li>
+            7.3
+            <a href="Git-Tools-Stashing-and-Cleaning.html">Stashing and Cleaning</a>
+          </li>
+          <li>
+            7.4
+            <a href="Git-Tools-Signing-Your-Work.html">Signing Your Work</a>
+          </li>
+          <li>
+            7.5
+            <a href="Git-Tools-Searching.html">Searching</a>
+          </li>
+          <li>
+            7.6
+            <a href="Git-Tools-Rewriting-History.html">Rewriting History</a>
+          </li>
+          <li>
+            7.7
+            <a href="Git-Tools-Reset-Demystified.html">Reset Demystified</a>
+          </li>
+          <li>
+            7.8
+            <a href="Git-Tools-Advanced-Merging.html">Advanced Merging</a>
+          </li>
+          <li>
+            7.9
+            <a href="Git-Tools-Rerere.html">Rerere</a>
+          </li>
+          <li>
+            7.10
+            <a href="Git-Tools-Debugging-with-Git.html">Debugging with Git</a>
+          </li>
+          <li>
+            7.11
+            <a href="Git-Tools-Submodules.html">Submodules</a>
+          </li>
+          <li>
+            7.12
+            <a href="Git-Tools-Bundling.html">Bundling</a>
+          </li>
+          <li>
+            7.13
+            <a href="Git-Tools-Replace.html">Replace</a>
+          </li>
+          <li>
+            7.14
+            <a href="Git-Tools-Credential-Storage.html">Credential Storage</a>
+          </li>
+          <li>
+            7.15
+            <a href="http://git-scm.com/book/en/v2/Git-Tools-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>8. <a href="Customizing-Git-Git-Configuration.html">Customizing Git</a></h2>
+    <ol>
+          <li>
+            8.1
+            <a href="Customizing-Git-Git-Configuration.html">Git Configuration</a>
+          </li>
+          <li>
+            8.2
+            <a href="Customizing-Git-Git-Attributes.html">Git Attributes</a>
+          </li>
+          <li>
+            8.3
+            <a href="Customizing-Git-Git-Hooks.html">Git Hooks</a>
+          </li>
+          <li>
+            8.4
+            <a href="Customizing-Git-An-Example-Git-Enforced-Policy.html">An Example Git-Enforced Policy</a>
+          </li>
+          <li>
+            8.5
+            <a href="http://git-scm.com/book/en/v2/Customizing-Git-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>9. <a href="Git-and-Other-Systems-Git-as-a-Client.html">Git and Other Systems</a></h2>
+    <ol>
+          <li>
+            9.1
+            <a href="Git-and-Other-Systems-Git-as-a-Client.html">Git as a Client</a>
+          </li>
+          <li>
+            9.2
+            <a href="Git-and-Other-Systems-Migrating-to-Git.html">Migrating to Git</a>
+          </li>
+          <li>
+            9.3
+            <a href="http://git-scm.com/book/en/v2/Git-and-Other-Systems-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>10. <a href="Git-Internals-Plumbing-and-Porcelain.html">Git Internals</a></h2>
+    <ol>
+          <li>
+            10.1
+            <a href="Git-Internals-Plumbing-and-Porcelain.html">Plumbing and Porcelain</a>
+          </li>
+          <li>
+            10.2
+            <a href="Git-Internals-Git-Objects.html">Git Objects</a>
+          </li>
+          <li>
+            10.3
+            <a href="Git-Internals-Git-References.html">Git References</a>
+          </li>
+          <li>
+            10.4
+            <a href="http://git-scm.com/book/en/v2/Git-Internals-Packfiles">Packfiles</a>
+          </li>
+          <li>
+            10.5
+            <a href="Git-Internals-The-Refspec.html">The Refspec</a>
+          </li>
+          <li>
+            10.6
+            <a href="http://git-scm.com/book/en/v2/Git-Internals-Transfer-Protocols">Transfer Protocols</a>
+          </li>
+          <li>
+            10.7
+            <a href="Git-Internals-Maintenance-and-Data-Recovery.html">Maintenance and Data Recovery</a>
+          </li>
+          <li>
+            10.8
+            <a href="http://git-scm.com/book/en/v2/Git-Internals-Environment-Variables">Environment Variables</a>
+          </li>
+          <li>
+            10.9
+            <a href="http://git-scm.com/book/en/v2/Git-Internals-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+    <div class='column-right'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>A1. <a href="http://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Graphical-Interfaces">Appendix A: Git in Other Environments</a></h2>
+    <ol>
+          <li>
+            A1.1
+            <a href="http://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Graphical-Interfaces">Graphical Interfaces</a>
+          </li>
+          <li>
+            A1.2
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Git-in-Visual-Studio.html">Git in Visual Studio</a>
+          </li>
+          <li>
+            A1.3
+            <a href="http://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Eclipse">Git in Eclipse</a>
+          </li>
+          <li>
+            A1.4
+            <a href="http://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Bash">Git in Bash</a>
+          </li>
+          <li>
+            A1.5
+            <a href="Appendix-A%253A-Git-in-Other-Environments-Git-in-Zsh.html">Git in Zsh</a>
+          </li>
+          <li>
+            A1.6
+            <a href="http://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Powershell">Git in Powershell</a>
+          </li>
+          <li>
+            A1.7
+            <a href="http://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Summary">Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>A2. <a href="http://git-scm.com/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Command-line-Git">Appendix B: Embedding Git in your Applications</a></h2>
+    <ol>
+          <li>
+            A2.1
+            <a href="http://git-scm.com/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Command-line-Git">Command-line Git</a>
+          </li>
+          <li>
+            A2.2
+            <a href="Appendix-B%253A-Embedding-Git-in-your-Applications-Libgit2.html">Libgit2</a>
+          </li>
+          <li>
+            A2.3
+            <a href="http://git-scm.com/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-JGit">JGit</a>
+          </li>
+          <li>
+            A2.4
+            <a href="http://git-scm.com/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-go-git">go-git</a>
+          </li>
+          <li>
+            A2.5
+            <a href="http://git-scm.com/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Dulwich">Dulwich</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>A3. <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config">Appendix C: Git Commands</a></h2>
+    <ol>
+          <li>
+            A3.1
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config">Setup and Config</a>
+          </li>
+          <li>
+            A3.2
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Getting-and-Creating-Projects">Getting and Creating Projects</a>
+          </li>
+          <li>
+            A3.3
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Basic-Snapshotting">Basic Snapshotting</a>
+          </li>
+          <li>
+            A3.4
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Branching-and-Merging">Branching and Merging</a>
+          </li>
+          <li>
+            A3.5
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Sharing-and-Updating-Projects">Sharing and Updating Projects</a>
+          </li>
+          <li>
+            A3.6
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Inspection-and-Comparison">Inspection and Comparison</a>
+          </li>
+          <li>
+            A3.7
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Debugging">Debugging</a>
+          </li>
+          <li>
+            A3.8
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Patching">Patching</a>
+          </li>
+          <li>
+            A3.9
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Email">Email</a>
+          </li>
+          <li>
+            A3.10
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-External-Systems">External Systems</a>
+          </li>
+          <li>
+            A3.11
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Administration">Administration</a>
+          </li>
+          <li>
+            A3.12
+            <a href="http://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Plumbing-Commands">Plumbing Commands</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+  </div>
+ </div>
+
+    <span class="light" id="edition">
+      2nd Edition
+    </span>
+</div>
+
+<div id='main' class="book edition2">
+    <a name="//apple_ref/Guide/7.1%20Git%20Tools%20-%20Revision%20Selection" class="dashAnchor"></a>
+<h1>7.1 Git Tools - Revision Selection</h1>
+  <div><p>By now, you’ve learned most of the day-to-day commands and workflows that you need to manage or maintain a Git repository for your source code control.
+You’ve accomplished the basic tasks of tracking and committing files, and you’ve harnessed the power of the staging area and lightweight topic branching and merging.</p><p>Now you’ll explore a number of very powerful things that Git can do that you may not necessarily use on a day-to-day basis but that you may need at some point.</p>
+<a name="//apple_ref/Section/Revision%20Selection" class="dashAnchor"></a>
+<h2 id="_revision_selection">Revision Selection</h2>
+<div class="paragraph">
+<p>Git allows you to refer to a set of commits or a range of commits in several ways.
+They aren’t necessarily obvious but are helpful to know.</p>
+</div>
+<div class="sect3">
+<h3 id="_single_revisions">Single Revisions</h3>
+<div class="paragraph">
+<p>You can obviously refer to any single commit by its full, 40-character SHA-1 hash, but there are more human-friendly ways to refer to commits as well.
+This section outlines the various ways you can refer to any commit.</p>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_short_sha_1">Short SHA-1</h3>
+<div class="paragraph">
+<p>Git is smart enough to figure out what commit you’re referring to if you provide the first few characters of the SHA-1 hash, as long as that partial hash is at least four characters long and unambiguous; that is, no other object in the object database can have a hash that begins with the same prefix.</p>
+</div>
+<div class="paragraph">
+<p>For example, to examine a specific commit where you know you added certain functionality, you might first run the <code>git log</code> command to locate the commit:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log
+commit 734713bc047d87bf7eac9674765ae793478c50d3
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Fri Jan 2 18:32:33 2009 -0800
+
+    fixed refs handling, added gc auto, updated tests
+
+commit d921970aadf03b3cf0e71becdaab3147ba71cdef
+Merge: 1c002dd... 35cfb2b...
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Thu Dec 11 15:08:43 2008 -0800
+
+    Merge commit 'phedders/rdocs'
+
+commit 1c002dd4b536e7479fe34593e72e6c6c1819e53b
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Thu Dec 11 14:58:32 2008 -0800
+
+    added some blame and merge stuff</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, say you’re interested in the commit whose hash begins with <code>1c002dd...</code>.
+You can inspect that commit with any of the following variations of <code>git show</code> (assuming the shorter versions are unambiguous):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show 1c002dd4b536e7479fe34593e72e6c6c1819e53b
+$ git show 1c002dd4b536e7479f
+$ git show 1c002d</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Git can figure out a short, unique abbreviation for your SHA-1 values.
+If you pass <code>--abbrev-commit</code> to the <code>git log</code> command, the output will use shorter values but keep them unique; it defaults to using seven characters but makes them longer if necessary to keep the SHA-1 unambiguous:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log --abbrev-commit --pretty=oneline
+ca82a6d changed the version number
+085bb3b removed unnecessary test code
+a11bef0 first commit</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Generally, eight to ten characters are more than enough to be unique within a project.
+For example, as of June 2018, the Linux kernel (which is a fairly sizable project) has over 700,000 commits and almost six and a half million objects in its object database, with no two objects whose SHA-1s are identical in the first 11 characters.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title">A SHORT NOTE ABOUT SHA-1</div>
+<div class="paragraph">
+<p>A lot of people become concerned at some point that they will, by random happenstance, have two distinct objects in their repository that hash to the same SHA-1 value.
+What then?</p>
+</div>
+<div class="paragraph">
+<p>If you do happen to commit an object that hashes to the same SHA-1 value as a previous <em>different</em> object in your repository, Git will see the previous object already in your Git database, assume it was already written and simply reuse it.
+If you try to check out that object again at some point, you’ll always get the data of the first object.</p>
+</div>
+<div class="paragraph">
+<p>However, you should be aware of how ridiculously unlikely this scenario is.
+The SHA-1 digest is 20 bytes or 160 bits.
+The number of randomly hashed objects needed to ensure a 50% probability of a single collision is about 2<sup>80</sup>
+(the formula for determining collision probability is <code>p = (n(n-1)/2) * (1/2^160))</code>. 2<sup>80</sup>
+is 1.2 x 10<sup>24</sup>
+or 1 million billion billion.
+That’s 1,200 times the number of grains of sand on the earth.</p>
+</div>
+<div class="paragraph">
+<p>Here’s an example to give you an idea of what it would take to get a SHA-1 collision.
+If all 6.5 billion humans on Earth were programming, and every second, each one was producing code that was the equivalent of the entire Linux kernel history (6.5 million Git objects) and pushing it into one enormous Git repository, it would take roughly 2 years until that repository contained enough objects to have a 50% probability of a single SHA-1 object collision.
+Thus, a SHA-1 collision is less likely than every member of your programming team being attacked and killed by wolves in unrelated incidents on the same night.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_branch_references">Branch References</h3>
+<div class="paragraph">
+<p>One straightforward way to refer to a particular commit is if it’s the commit at the tip of a branch; in that case, you can simply use the branch name in any Git command that expects a reference to a commit.
+For instance, if you want to examine the last commit object on a branch, the following commands are equivalent, assuming that the <code>topic1</code> branch points to commit <code>ca82a6d...</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show ca82a6dff817ec66f44342007202690a93763949
+$ git show topic1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to see which specific SHA-1 a branch points to, or if you want to see what any of these examples boils down to in terms of SHA-1s, you can use a Git plumbing tool called <code>rev-parse</code>.
+You can see <a href="ch00/ch10-git-internals.html">Git Internals</a> for more information about plumbing tools; basically, <code>rev-parse</code> exists for lower-level operations and isn’t designed to be used in day-to-day operations.
+However, it can be helpful sometimes when you need to see what’s really going on.
+Here you can run <code>rev-parse</code> on your branch.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git rev-parse topic1
+ca82a6dff817ec66f44342007202690a93763949</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_git_reflog">RefLog Shortnames</h3>
+<div class="paragraph">
+<p>One of the things Git does in the background while you’re working away is keep a “reflog” — a log of where your HEAD and branch references have been for the last few months.</p>
+</div>
+<div class="paragraph">
+<p>You can see your reflog by using <code>git reflog</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git reflog
+734713b HEAD@{0}: commit: fixed refs handling, added gc auto, updated
+d921970 HEAD@{1}: merge phedders/rdocs: Merge made by the 'recursive' strategy.
+1c002dd HEAD@{2}: commit: added some blame and merge stuff
+1c36188 HEAD@{3}: rebase -i (squash): updating HEAD
+95df984 HEAD@{4}: commit: # This is a combination of two commits.
+1c36188 HEAD@{5}: rebase -i (squash): updating HEAD
+7e05da5 HEAD@{6}: rebase -i (pick): updating HEAD</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Every time your branch tip is updated for any reason, Git stores that information for you in this temporary history.
+You can use your reflog data to refer to older commits as well.
+For example, if you want to see the fifth prior value of the HEAD of your repository, you can use the <code>@{5}</code> reference that you see in the reflog output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show HEAD@{5}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also use this syntax to see where a branch was some specific amount of time ago.
+For instance, to see where your <code>master</code> branch was yesterday, you can type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show master@{yesterday}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That would show you where tip of your <code>master</code> branch was yesterday.
+This technique only works for data that’s still in your reflog, so you can’t use it to look for commits older than a few months.</p>
+</div>
+<div class="paragraph">
+<p>To see reflog information formatted like the <code>git log</code> output, you can run <code>git log -g</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log -g master
+commit 734713bc047d87bf7eac9674765ae793478c50d3
+Reflog: master@{0} (Scott Chacon &lt;schacon@gmail.com&gt;)
+Reflog message: commit: fixed refs handling, added gc auto, updated
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Fri Jan 2 18:32:33 2009 -0800
+
+    fixed refs handling, added gc auto, updated tests
+
+commit d921970aadf03b3cf0e71becdaab3147ba71cdef
+Reflog: master@{1} (Scott Chacon &lt;schacon@gmail.com&gt;)
+Reflog message: merge phedders/rdocs: Merge made by recursive.
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Thu Dec 11 15:08:43 2008 -0800
+
+    Merge commit 'phedders/rdocs'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s important to note that reflog information is strictly local — it’s a log only of what <em>you’ve</em> done in <em>your</em> repository.
+The references won’t be the same on someone else’s copy of the repository; also, right after you initially clone a repository, you’ll have an empty reflog, as no activity has occurred yet in your repository.
+Running <code>git show HEAD@{2.months.ago}</code> will show you the matching commit only if you cloned the project at least two months ago — if you cloned it any more recently than that, you’ll see only your first local commit.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Think of the reflog as Git’s version of shell history</div>
+<div class="paragraph">
+<p>If you have a UNIX or Linux background, you can think of the reflog as Git’s version of shell history, which emphasizes that what’s there is clearly relevant only for you and your “session”, and has nothing to do with anyone else who might be working on the same machine.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_ancestry_references">Ancestry References</h3>
+<div class="paragraph">
+<p>The other main way to specify a commit is via its ancestry.
+If you place a <code>^</code> (caret) at the end of a reference, Git resolves it to mean the parent of that commit.
+Suppose you look at the history of your project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log --pretty=format:'%h %s' --graph
+* 734713b fixed refs handling, added gc auto, updated tests
+*   d921970 Merge commit 'phedders/rdocs'
+|\
+| * 35cfb2b Some rdoc changes
+* | 1c002dd added some blame and merge stuff
+|/
+* 1c36188 ignore *.gem
+* 9b29157 add open3_detach to gemspec file list</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, you can see the previous commit by specifying <code>HEAD^</code>, which means “the parent of HEAD”:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show HEAD^
+commit d921970aadf03b3cf0e71becdaab3147ba71cdef
+Merge: 1c002dd... 35cfb2b...
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Thu Dec 11 15:08:43 2008 -0800
+
+    Merge commit 'phedders/rdocs'</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title">Escaping the caret on Windows</div>
+<div class="paragraph">
+<p>On Windows in <code>cmd.exe</code>, <code>^</code> is a special character and needs to be treated differently. You can either double it or put the commit reference in quotes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show HEAD^     # will NOT work on Windows
+$ git show HEAD^^    # OK
+$ git show "HEAD^"   # OK</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can also specify a number after the <code>^</code> to identify <em>which</em> parent you want; for example, <code>d921970^2</code> means “the second parent of d921970.”
+This syntax is useful only for merge commits, which have more than one parent — the <em>first</em> parent of a merge commit is from the branch you were on when you merged (frequently <code>master</code>), while the <em>second</em> parent of a merge commit is from the branch that was merged (say, <code>topic</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show d921970^
+commit 1c002dd4b536e7479fe34593e72e6c6c1819e53b
+Author: Scott Chacon &lt;schacon@gmail.com&gt;
+Date:   Thu Dec 11 14:58:32 2008 -0800
+
+    added some blame and merge stuff
+
+$ git show d921970^2
+commit 35cfb2b795a55793d7cc56a6cc2060b4bb732548
+Author: Paul Hedderly &lt;paul+git@mjr.org&gt;
+Date:   Wed Dec 10 22:22:03 2008 +0000
+
+    Some rdoc changes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The other main ancestry specification is the <code>~</code> (tilde).
+This also refers to the first parent, so <code>HEAD~</code> and <code>HEAD^</code> are equivalent.
+The difference becomes apparent when you specify a number.
+<code>HEAD~2</code> means “the first parent of the first parent,” or “the grandparent” — it traverses the first parents the number of times you specify.
+For example, in the history listed earlier, <code>HEAD~3</code> would be</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show HEAD~3
+commit 1c3618887afb5fbcbea25b7c013f4e2114448b8d
+Author: Tom Preston-Werner &lt;tom@mojombo.com&gt;
+Date:   Fri Nov 7 13:47:59 2008 -0500
+
+    ignore *.gem</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This can also be written <code>HEAD~~~</code>, which again is the first parent of the first parent of the first parent:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git show HEAD~~~
+commit 1c3618887afb5fbcbea25b7c013f4e2114448b8d
+Author: Tom Preston-Werner &lt;tom@mojombo.com&gt;
+Date:   Fri Nov 7 13:47:59 2008 -0500
+
+    ignore *.gem</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also combine these syntaxes — you can get the second parent of the previous reference (assuming it was a merge commit) by using <code>HEAD~3^2</code>, and so on.</p>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_commit_ranges">Commit Ranges</h3>
+<div class="paragraph">
+<p>Now that you can specify individual commits, let’s see how to specify ranges of commits.
+This is particularly useful for managing your branches — if you have a lot of branches, you can use range specifications to answer questions such as, “What work is on this branch that I haven’t yet merged into my main branch?”</p>
+</div>
+<div class="sect4">
+<h4 id="_double_dot">Double Dot</h4>
+<div class="paragraph">
+<p>The most common range specification is the double-dot syntax.
+This basically asks Git to resolve a range of commits that are reachable from one commit but aren’t reachable from another.
+For example, say you have a commit history that looks like <a href="ch00/double_dot.html">Example history for range selection.</a>.</p>
+</div>
+<div id="double_dot" class="imageblock">
+<div class="content">
+<img src="http://git-scm.com/book/en/v2/images/double-dot.png" alt="Example history for range selection.">
+</div>
+<div class="title">Figure 137. Example history for range selection.</div>
+</div>
+<div class="paragraph">
+<p>Say you want to see what is in your <code>experiment</code> branch that hasn’t yet been merged into your <code>master</code> branch.
+You can ask Git to show you a log of just those commits with <code>master..experiment</code> — that means “all commits reachable from experiment that aren’t reachable from master.”
+For the sake of brevity and clarity in these examples, the letters of the commit objects from the diagram are used in place of the actual log output in the order that they would display:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log master..experiment
+D
+C</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If, on the other hand, you want to see the opposite — all commits in <code>master</code> that aren’t in <code>experiment</code> — you can reverse the branch names.
+<code>experiment..master</code> shows you everything in <code>master</code> not reachable from <code>experiment</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log experiment..master
+F
+E</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is useful if you want to keep the <code>experiment</code> branch up to date and preview what you’re about to merge.
+Another frequent use of this syntax is to see what you’re about to push to a remote:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log origin/master..HEAD</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command shows you any commits in your current branch that aren’t in the <code>master</code> branch on your <code>origin</code> remote.
+If you run a <code>git push</code> and your current branch is tracking <code>origin/master</code>, the commits listed by <code>git log origin/master..HEAD</code> are the commits that will be transferred to the server.
+You can also leave off one side of the syntax to have Git assume <code>HEAD</code>.
+For example, you can get the same results as in the previous example by typing <code>git log origin/master..</code> — Git substitutes <code>HEAD</code> if one side is missing.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_multiple_points">Multiple Points</h4>
+<div class="paragraph">
+<p>The double-dot syntax is useful as a shorthand, but perhaps you want to specify more than two branches to indicate your revision, such as seeing what commits are in any of several branches that aren’t in the branch you’re currently on.
+Git allows you to do this by using either the <code>^</code> character or <code>--not</code> before any reference from which you don’t want to see reachable commits.
+Thus, the following three commands are equivalent:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log refA..refB
+$ git log ^refA refB
+$ git log refB --not refA</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is nice because with this syntax you can specify more than two references in your query, which you cannot do with the double-dot syntax.
+For instance, if you want to see all commits that are reachable from <code>refA</code> or <code>refB</code> but not from <code>refC</code>, you can use either of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log refA refB ^refC
+$ git log refA refB --not refC</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This makes for a very powerful revision query system that should help you figure out what is in your branches.</p>
+</div>
+</div>
+<div class="sect4">
+<h4 id="_triple_dot">Triple Dot</h4>
+<div class="paragraph">
+<p>The last major range-selection syntax is the triple-dot syntax, which specifies all the commits that are reachable by <em>either</em> of two references but not by both of them.
+Look back at the example commit history in <a href="ch00/double_dot.html">Example history for range selection.</a>.
+If you want to see what is in <code>master</code> or <code>experiment</code> but not any common references, you can run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log master...experiment
+F
+E
+D
+C</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, this gives you normal <code>log</code> output but shows you only the commit information for those four commits, appearing in the traditional commit date ordering.</p>
+</div>
+<div class="paragraph">
+<p>A common switch to use with the <code>log</code> command in this case is <code>--left-right</code>, which shows you which side of the range each commit is in.
+This helps make the output more useful:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git log --left-right master...experiment
+&lt; F
+&lt; E
+&gt; D
+&gt; C</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With these tools, you can much more easily let Git know what commit or commits you want to inspect.</p>
+</div>
+</div>
+</div>
+<div id="nav"><a href="http://git-scm.com/book/en/v2/GitHub-Summary">prev</a> | <a href="Git-Tools-Interactive-Staging.html">next</a></div></div>
+</div>
+
+        </div>
+      </div>
+      <footer>
+  <div class="site-source">
+    <a href="http://git-scm.com/site">About this site</a><br>
+    Patches, suggestions, and comments are welcome.
+  </div>
+  <div class="sfc-member">
+    Git is a member of <a href="http://git-scm.com/sfc">Software Freedom Conservancy</a>
+  </div>
+</footer>
+
+<script src="http://git-scm.com/assets/application-df8e4c34a53c9af865972757bd97591066f28f7c8ce2ec256c1b2f10c8c7b16a.js"></script>
+
+    </div>
+
+</body>
+</html>
