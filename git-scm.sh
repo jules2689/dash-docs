@@ -38,5 +38,5 @@ rm sqlite.sql
 
 # copy over fresh files
 cp -R website/* doc/git-scm.docset/Contents/Resources/Documents/
-tar czf doc/git-scm.tar.gz doc/git-scm.docset
+tar --exclude='.DS_Store' -cvzf  doc/git-scm.tgz  doc/git-scm.docset
 rm -rf doc/git-scm.docset
