@@ -25,26 +25,26 @@ else
 fi
 
 # Remove old docset
-rm -rf doc/git-scm.docset
+rm -rf docs/git-scm.docset
 
 # Make docset folder and copy in HTML
-mkdir -p doc/git-scm.docset/Contents/Resources/Documents/
+mkdir -p docs/git-scm.docset/Contents/Resources/Documents/
 
 # Add Plist
-cp generator/git-scm/default.plist doc/git-scm.docset/Contents/info.plist
+cp generator/git-scm/default.plist docs/git-scm.docset/Contents/info.plist
 
 # Add Icon
-cp generator/git-scm/git.png doc/git-scm.docset/icon.png
+cp generator/git-scm/git.png docs/git-scm.docset/icon.png
 
 # Make sqlite DB and rename files for dash
 BUNDLE_GEMFILE=generator/git-scm/Gemfile bundle exec ruby generator/git-scm/sqlite_db.rb
-sqlite3 doc/git-scm.docset/Contents/Resources/docSet.dsidx < generator/git-scm/sqlite.sql
+sqlite3 docs/git-scm.docset/Contents/Resources/docSet.dsidx < generator/git-scm/sqlite.sql
 rm sqlite.sql
 
 # copy over fresh files
-cp -R generator/git-scm/website/* doc/git-scm.docset/Contents/Resources/Documents/
-tar --exclude='.DS_Store' -cvzf doc/git-scm.tgz doc/git-scm.docset
-rm -rf doc/git-scm.docset
+cp -R generator/git-scm/website/* docs/git-scm.docset/Contents/Resources/Documents/
+tar --exclude='.DS_Store' -cvzf docs/git-scm.tgz docs/git-scm.docset
+rm -rf docs/git-scm.docset
 
 # Bump version number
-ruby -e "c = File.read('doc/gitscm.xml'); v = c.match(/<version>(\d+\.\d+)/)[1]; c.gsub!(v, (v.to_f + 0.1).to_s); File.write('doc/gitscm.xml', c)"
+ruby -e "c = File.read('docs/gitscm.xml'); v = c.match(/<version>(\d+\.\d+)/)[1]; c.gsub!(v, (v.to_f + 0.1).to_s); File.write('docs/gitscm.xml', c)"

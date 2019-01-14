@@ -17,24 +17,26 @@ end
 
 # Generate index
 puts "Writing out index.html file"
-available_docs = Dir.glob('doc/*.xml').map do |d|
-  url = "https://jules2689.github.io/dash-docs/#{d}"
-  "<li class=\"list-group-item\"><a href=\"dash-feed://#{CGI.escape(url)}\">#{d} => dash-feed://#{CGI.escape(url)}</a></li>"
-end.join("\n")
+Dir.chdir('docs') do
+  available_docs = Dir.glob('*.xml').map do |d|
+    url = "https://jules2689.github.io/dash-docs/#{d}"
+    "<li class=\"list-group-item\"><a href=\"dash-feed://#{CGI.escape(url)}\">#{d} => dash-feed://#{CGI.escape(url)}</a></li>"
+  end.join("\n")
 
-html=<<~HTML
-<html>
-<head>
-  <title>Dash Docset Feeds</title>
-  <link href="/dash-docs/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-  <h1>Dash Docset Feeds</h1>
-   <ul class="list-group">
-    #{available_docs}
-  </ul>
-</body>
-</html>
-HTML
+  html=<<~HTML
+  <html>
+  <head>
+    <title>Dash Docset Feeds</title>
+    <link href="/dash-docs/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Dash Docset Feeds</h1>
+     <ul class="list-group">
+      #{available_docs}
+    </ul>
+  </body>
+  </html>
+  HTML
 
-File.write('doc/index.html', html)
+  File.write('index.html', html)
+end
