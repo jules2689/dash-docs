@@ -7,12 +7,14 @@ def divide
 end
 
 # Generate docs
-use_bak = ARGV.include?('--use-backup')
-Dir.glob('generator/*/generate.sh').each do |d|
-  cmd = "/bin/bash #{d}"
-  cmd << " --use-backup" if use_bak
-  system(cmd)
-  divide
+unless ARGV.include?('--skip-gen')
+  use_bak = ARGV.include?('--use-backup')
+  Dir.glob('generator/*/generate.sh').each do |d|
+    cmd = "/bin/bash #{d}"
+    cmd << " --use-backup" if use_bak
+    system(cmd)
+    divide
+  end
 end
 
 # Generate index
@@ -28,12 +30,15 @@ Dir.chdir('docs') do
   <head>
     <title>Dash Docset Feeds</title>
     <link href="/dash-docs/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <h1>Dash Docset Feeds</h1>
-     <ul class="list-group">
-      #{available_docs}
-    </ul>
+    <div class="container">
+      <h1>Dash Docset Feeds</h1>
+       <ul class="list-group">
+        #{available_docs}
+      </ul>
+    </div>
   </body>
   </html>
   HTML
